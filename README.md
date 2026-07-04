@@ -7,15 +7,13 @@
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue.svg)](skills/project-health-pass/SKILL.md)
 [![Version](https://img.shields.io/badge/version-0.4.1-black.svg)](skills/project-health-pass/SKILL.md)
 
-**Y.Skill is a self-improving Agent Skill for repository health remediation.**
+**Y.Skill packages `project-health-pass`, a self-improving Agent Skill for repository health remediation.**
 
-It gives Claude Code, OpenAI Codex, Cursor, and other `SKILL.md`-compatible agents a disciplined workflow for finding, fixing, verifying, and remembering core reliability problems in real repositories.
+It gives Claude Code, OpenAI Codex, Cursor, and other `SKILL.md`-compatible agents a disciplined way to inspect real repositories, verify serious findings, fix safe reliability issues, and remember project-specific lessons for future runs.
 
-This repository is the installable package. The marketplace and plugin are named `project-health-pass`, and the bundled skill is [`project-health-pass`](skills/project-health-pass/SKILL.md).
+## Quick Start
 
-## Start Here
-
-Install the marketplace, then invoke the skill by name:
+Claude Code:
 
 ```text
 /plugin marketplace add IoannisBekas/Y.Skill
@@ -23,53 +21,43 @@ Install the marketplace, then invoke the skill by name:
 /reload-plugins
 ```
 
-First useful prompt:
+Start with a read-only pass:
 
 ```text
 Use project-health-pass in audit-only mode. Do not edit files. Run the native checks that are safe, produce stable HP-* findings, and mark unknown evidence surfaces explicitly.
 ```
 
-When you want remediation:
+Then ask for safe remediation:
 
 ```text
 Use project-health-pass in fix-verified mode. Counter-review serious findings, fix only safe P0-P2 issues, add focused tests, and report anything blocked.
 ```
 
-## Why This Exists
+## What It Does
 
-Asking an agent to "review this repo" usually produces a one-off opinion. Y.Skill turns that request into a repeatable health pass with evidence, stable IDs, safe remediation rules, and project memory.
+`project-health-pass` turns "review this repo" into a repeatable health workflow:
 
-It gives the agent a durable workflow:
+- maps project structure, package managers, CI, scripts, docs, and runtime boundaries;
+- distinguishes source from generated files, logs, caches, and build outputs;
+- runs native lint, typecheck, test, build, audit, and smoke checks when safe;
+- ranks findings as P0/P1/P2/P3 using evidence, blast radius, and reversibility;
+- assigns stable `HP-*` IDs so reports can be compared across runs;
+- counter-reviews serious findings before reporting or fixing them;
+- fixes verified P0/P1/P2 issues only when the change is safely scoped;
+- records useful project lessons in `.agent_memory.json`.
 
-- read project memory from `.agent_memory.json`;
-- select a safe mode before touching files;
-- inspect repo structure, toolchains, CI, docs, and runtime boundaries;
-- run the repo's own lint, typecheck, test, build, audit, and smoke checks where safe;
-- assign stable `HP-*` finding IDs;
-- counter-review serious findings before reporting or fixing them;
-- fix verified P0/P1/P2 issues only when safely scoped;
-- update focused tests;
-- emit optional machine-readable reports;
-- write verified lessons back to memory.
+## When to Use It
 
-## Use It For
+| Use It For | Avoid Using It For |
+| --- | --- |
+| CI failures with unclear root cause | Single-function code review |
+| Pre-release reliability hardening | Cosmetic lint cleanup |
+| Auditing inherited or unfamiliar repos | Broad refactors without verified reliability impact |
+| Cleaning up AI-generated apps before real users | Production writes or destructive migrations |
+| Comparing weekly or monthly health reports | Replacing a security audit for regulated systems |
+| Capturing repo-specific quirks for future agents | Credentialed external actions without explicit approval |
 
-- CI failures where the real root cause is unclear.
-- Pre-release reliability hardening.
-- Auditing an unfamiliar or inherited repository.
-- Cleaning up AI-generated apps before they face real users.
-- Comparing health reports across weekly or monthly runs.
-- Capturing repo-specific quirks so future agents do not repeat the same mistakes.
-
-## Not For
-
-- Single-function code review.
-- Cosmetic lint cleanup.
-- Broad refactors without a verified reliability reason.
-- Production writes, credentialed external actions, or destructive migrations.
-- Replacing a security audit for regulated or high-risk systems.
-
-## The Three Modes
+## Modes
 
 | Mode | Use When | File Writes |
 | --- | --- | --- |
@@ -79,31 +67,15 @@ It gives the agent a durable workflow:
 
 If a request is ambiguous, the skill chooses `audit-only`. If the user asks to fix, repair, or unblock CI/deployments, it chooses `fix-verified`.
 
-## What Makes It Different
+## Core Practices
 
-- **Evidence coverage matrix:** each surface is marked `pass`, `finding`, `unknown`, or `not-applicable`. Unknown is never treated as healthy.
-- **Counter-review gate:** P0/P1/P2 findings must be verified by source trace, native command, test, or reproducible behavior before they are reported or fixed.
-- **Stable finding IDs:** findings use IDs such as `HP-SEC-001`, `HP-BUILD-001`, `HP-TEST-001`, and `HP-CONFIG-001`, so reports can be diffed across runs.
-- **Safest-first remediation:** fixes are prioritized by severity, evidence strength, reversibility, blast radius, and available verification.
-- **Project memory:** verified command quirks, false positives, failed assumptions, and effective strategies are written to `.agent_memory.json` for future runs. Review that file before committing it to a team repository.
+- **Evidence coverage:** every checked surface is marked `pass`, `finding`, `unknown`, or `not-applicable`.
+- **Counter-review gate:** P0/P1/P2 findings need source trace, native command output, test evidence, or reproducible behavior.
+- **Stable finding IDs:** findings use IDs such as `HP-SEC-001`, `HP-BUILD-001`, `HP-TEST-001`, and `HP-CONFIG-001`.
+- **Safest-first remediation:** fixes are ranked by severity, evidence strength, reversibility, blast radius, and available verification.
+- **Project memory:** verified command quirks, false positives, failed assumptions, and effective strategies are written to `.agent_memory.json`.
 
-## Example Prompts
-
-```text
-Use project-health-pass in audit-only mode. Do not edit files. Produce stable HP-* findings and mark unknown evidence surfaces explicitly.
-```
-
-```text
-Use project-health-pass in fix-verified mode. Run the native checks, counter-review serious findings, fix safe P0-P2 issues, and update focused tests.
-```
-
-```text
-Use project-health-pass in baseline-diff mode. Compare the current repo against the previous project-health-pass JSON report.
-```
-
-```text
-CI is failing. Use project-health-pass to find the root cause, fix verified build/test blockers, and report any remaining blocked items.
-```
+Review `.agent_memory.json` before committing it to a team repository.
 
 ## Install
 
@@ -115,7 +87,7 @@ CI is failing. Use project-health-pass to find the root cause, fix verified buil
 /reload-plugins
 ```
 
-Then invoke it:
+Invoke it:
 
 ```text
 Use the project-health-pass skill in fix-verified mode for a deep repo health pass.
@@ -131,7 +103,7 @@ codex plugin marketplace add IoannisBekas/Y.Skill
 
 Then open Codex Plugins and install or enable `Project Health Pass`.
 
-Or as a local skill:
+As a local skill:
 
 ```bash
 mkdir -p ~/.codex/skills
@@ -147,7 +119,7 @@ Copy-Item -Recurse -Force ".\skills\project-health-pass" "$HOME\.codex\skills\"
 
 ### Claude.ai Custom Skill
 
-Claude.ai expects a ZIP whose root contains the skill folder. Build it locally with one of the commands below, or download `project-health-pass.zip` from the latest GitHub release.
+Claude.ai expects a ZIP whose root contains the skill folder. Build it locally, or download `project-health-pass.zip` from the latest GitHub release.
 
 ```powershell
 .\scripts\package-claude-ai.ps1
@@ -180,7 +152,7 @@ mkdir -p .agents/skills
 cp -R skills/project-health-pass .agents/skills/
 ```
 
-## Optional JSON Reports
+## Reports and Memory
 
 The skill can emit and validate `project-health-pass.report.v1` JSON for baselines, CI handoff, or long-running reliability programs.
 
@@ -190,17 +162,19 @@ python skills/project-health-pass/scripts/health_report.py validate --report hea
 python skills/project-health-pass/scripts/health_report.py diff --old previous.json --new health-report.json
 ```
 
-The report schema includes:
+Report sections include `repo_map`, `coverage`, `findings`, `backlog`, `suppressions`, `checks`, `changed_files`, `memory`, and `remaining`.
 
-- `repo_map`
-- `coverage`
-- `findings`
-- `backlog`
-- `suppressions`
-- `checks`
-- `changed_files`
-- `memory`
-- `remaining`
+Memory helpers:
+
+```bash
+python skills/project-health-pass/scripts/agent_memory.py read --repo .
+python skills/project-health-pass/scripts/agent_memory.py append --repo . \
+  --category command_quirk \
+  --summary "..." \
+  --details "..." \
+  --evidence "..." \
+  --action "..."
+```
 
 ## Repository Layout
 
@@ -215,16 +189,16 @@ adapters/                                 AGENTS.md, CLAUDE.md, generic prompt a
 evals/trigger-evals.json                  Trigger-quality prompts
 scripts/validate.py                       No-dependency validator
 scripts/package-claude-ai.*               Claude.ai ZIP packaging
+assets/yskill-overview.png                README image
 ```
 
-## Safety Model
+## Safety
 
 Y.Skill is deliberately conservative:
 
 - preserves user changes;
-- does not run destructive operations or production writes;
+- avoids destructive operations and production writes;
 - avoids credentialed external actions unless explicitly approved;
-- distinguishes source from generated/runtime artifacts before editing;
 - treats generated data, logs, caches, and build outputs as non-source by default;
 - does not hide failures by weakening tests or broadening ignores;
 - records skipped checks with exact blockers;
