@@ -1,0 +1,44 @@
+{
+  "name": "project-health-pass",
+  "version": "0.4.1",
+  "description": "Self-improving repo health remediation with audit/fix/diff modes, evidence coverage, counter-review, and HP-* findings.",
+  "author": {
+    "name": "IoannisBekas",
+    "url": "https://github.com/IoannisBekas"
+  },
+  "homepage": "https://github.com/IoannisBekas/Y.Skill",
+  "repository": "https://github.com/IoannisBekas/Y.Skill",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "skill-md",
+    "codex",
+    "claude-code",
+    "repo-health",
+    "agent-memory",
+    "baseline-diff",
+    "reliability-remediation",
+    "reliability",
+    "testing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Project Health Pass",
+    "shortDescription": "Self-improving repo remediation",
+    "longDescription": "Read .agent_memory.json, select audit-only/fix-verified/baseline-diff mode, map a repository, run native checks, maintain evidence coverage, counter-review serious findings, assign stable HP-* IDs, rank P0/P1/P2/P3 issues, build a safest-first remediation backlog, fix verified core reliability problems, add focused tests, optionally emit JSON reports, update memory, and report remaining risks.",
+    "developerName": "IoannisBekas",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/IoannisBekas/Y.Skill",
+    "defaultPrompt": [
+      "Use Project Health Pass to perform a self-improving deep project-wide health pass.",
+      "Use Project Health Pass in audit-only mode and produce stable HP-* findings.",
+      "Use Project Health Pass to produce evidence coverage and a safest-first remediation backlog.",
+      "Use Project Health Pass to fix verified P0/P1/P2 reliability problems."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

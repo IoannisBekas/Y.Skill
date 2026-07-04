@@ -1,0 +1,16 @@
+{
+  "name": "project-health-pass",
+  "version": "0.4.1",
+  "plugins": [
+    {
+      "name": "project-health-pass",
+      "source": {
+        "path": "./"
+      },
+      "interface": {
+        "displayName": "Project Health Pass",
+        "shortDescription": "Self-improving repo remediation"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Health Pass"
+  short_description: "Self-improving repo remediation"
+  default_prompt: "Use $project-health-pass in fix-verified mode to run native checks, counter-review HP-* findings, and repair safe P0-P2 reliability issues."

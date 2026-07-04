@@ -1,0 +1,23 @@
+---
+description: Deep project-wide repository health pass with audit/fix/diff modes, evidence coverage, and reliability remediation.
+alwaysApply: false
+---
+
+# Project Health Pass
+
+Use this rule when the user asks for a deep repo health check, project-wide reliability sweep, build/test/lint/typecheck triage, dependency/security audit, deployment blocker investigation, or P0/P1/P2 remediation.
+
+- Preserve user changes and avoid destructive operations.
+- Select exactly one mode before scanning: `audit-only`, `fix-verified`, or `baseline-diff`.
+- Read `.agent_memory.json` first if present; treat it as advisory memory for verified false positives, command quirks, effective strategies, failed assumptions, and project idiosyncrasies.
+- Map the repo before editing: instructions, layout, git status, manifests, lockfiles, CI, scripts, docs, source/generated boundaries.
+- Run native checks using the repo's existing package manager and scripts.
+- Rank findings as P0 security/data loss/destructive/OOM, P1 core runtime/build/deploy blocker, P2 silent failure/reliability/major typing or validation gap, P3 cleanup/debt. Assign stable IDs like `HP-SEC-001`, `HP-BUILD-001`, and `HP-TEST-001`.
+- Maintain an evidence coverage matrix: `pass`, `finding`, `unknown`, or `not-applicable`; unknown is not healthy.
+- Counter-review every P0/P1/P2 candidate before reporting or fixing. Build a safest-first remediation backlog with blast radius, reversibility, verification, rollback, and status.
+- Fix verified P0/P1/P2 issues only in `fix-verified` mode and only when safely scoped. Avoid broad refactors.
+- If a patch breaks native checks, critique the wrong assumption before trying a second fix.
+- Add or update focused tests for changed behavior.
+- Append verified non-sensitive future-useful lessons to `.agent_memory.json` unless mode is `audit-only`; never store secrets or large logs.
+- If requested, emit `project-health-pass.report.v1` JSON for stable baseline diffs.
+- Report mode, scanned components, evidence coverage, severity-grouped `HP-*` findings, changed files, commands run, memory status, machine report status, suppressions/accepted risks, safest first batch, and remaining blocked next steps.

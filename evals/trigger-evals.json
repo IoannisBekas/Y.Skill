@@ -1,0 +1,77 @@
+{
+  "skill_name": "project-health-pass",
+  "queries": [
+    {
+      "query": "Perform a deep project-wide health pass and fix any core reliability problems you find.",
+      "should_trigger": true
+    },
+    {
+      "query": "Can you audit this repo end to end, run lint/typecheck/tests/build, and repair deployment blockers?",
+      "should_trigger": true
+    },
+    {
+      "query": "Do a repo health check. Prioritize P0/P1/P2 issues and avoid broad refactors.",
+      "should_trigger": true
+    },
+    {
+      "query": "Find why CI is failing across the project and fix the underlying reliability issues.",
+      "should_trigger": true
+    },
+    {
+      "query": "Sweep the codebase for silent failures, broken scripts, and test/build blockers, then fix safe ones.",
+      "should_trigger": true
+    },
+    {
+      "query": "Map the whole stack, run the native checks, and give me a severity-ranked reliability report.",
+      "should_trigger": true
+    },
+    {
+      "query": "Run the self-improving project health pass, read previous .agent_memory.json lessons, and fix safe P0-P2 issues.",
+      "should_trigger": true
+    },
+    {
+      "query": "Run project-health-pass in audit-only mode and produce stable HP-* findings without editing files.",
+      "should_trigger": true
+    },
+    {
+      "query": "Compare this health pass against the previous JSON report and show the baseline diff.",
+      "should_trigger": true
+    },
+    {
+      "query": "Fix verified repo reliability issues and emit a machine-readable project-health-pass report.",
+      "should_trigger": true
+    },
+    {
+      "query": "Run an audit-only repo health pass with evidence coverage and mark unknown surfaces explicitly.",
+      "should_trigger": true
+    },
+    {
+      "query": "Counter-review serious P0/P1 findings and build a safest-first remediation backlog.",
+      "should_trigger": true
+    },
+    {
+      "query": "Review this one function for readability.",
+      "should_trigger": false
+    },
+    {
+      "query": "Add a button to the dashboard using the existing styles.",
+      "should_trigger": false
+    },
+    {
+      "query": "Explain how authentication works in this repo.",
+      "should_trigger": false
+    },
+    {
+      "query": "Write a README section for the install command.",
+      "should_trigger": false
+    },
+    {
+      "query": "Fix the typo in the login page copy.",
+      "should_trigger": false
+    },
+    {
+      "query": "Run npm test and tell me the output.",
+      "should_trigger": false
+    }
+  ]
+}
