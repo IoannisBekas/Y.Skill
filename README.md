@@ -1,5 +1,7 @@
 # Y.Skill
 
+![Taking control with Y.Skill](assets/yskill-overview.png)
+
 [![Validate](https://github.com/IoannisBekas/Y.Skill/actions/workflows/validate.yml/badge.svg)](https://github.com/IoannisBekas/Y.Skill/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue.svg)](skills/project-health-pass/SKILL.md)
